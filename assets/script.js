@@ -59,6 +59,7 @@ function calculate() {
 
   let endingValueSelector = 0;
   let principalCurrentBalance = principal;
+  let principalOriginialCurrentBalance = principal;
 
   principalAlert.innerHTML = '';
   interestAlert.innerHTML = '';
@@ -71,6 +72,7 @@ function calculate() {
   let payment = pmt + +additionalPMT;
   let currency = new Intl.NumberFormat('US', { style: 'currency', currency: 'USD' });
   let valueArrays = principalArr(p, payment, N, r, additionalPMT);
+  let originalValueArrays = principalArr(p, payment, N, r, 0);
   let monthsLeft = valueArrays.principalEndingValue.length - currentMonth;
   let totalPMT = payment * valueArrays.principalEndingValue.length;
   let totalAdditionalPMT = +additionalPMT * currentMonth;
@@ -78,14 +80,22 @@ function calculate() {
   if (currentMonth > 0) {
     endingValueSelector = currentMonth - 1;
     principalCurrentBalance = valueArrays.principalEndingValue[endingValueSelector];
+    principalOriginialCurrentBalance = originalValueArrays.principalEndingValue[endingValueSelector];
   }
   let capital = currentHomeValue - principalCurrentBalance;
+  let capitalOriginal = currentHomeValue - principalOriginialCurrentBalance;
 
   result.innerHTML = `
-  <div id="pmt">Monthly Payments: </div><div class='text-right'>${currency.format(payment)}</div>
-  <div id="currentBal">Current Balance: </div><div class='text-right'>${currency.format(principalCurrentBalance)}
+  <div id="pmt">Monthly Payments <span class="text-sm">
+  (Additional | Original): 
+  </span></div><div class='text-right'>${currency.format(payment)}</div>
+  <div id="currentBal">Current Balance: </div><div class='text-right'>${currency.format(
+    principalCurrentBalance
+  )} | ${currency.format(principalOriginialCurrentBalance)}
   </div>
-  <div id="monthsLeft">Months Left: </div><div class='text-right'>${monthsLeft} </div>
+  <div id="monthsLeft">Months Left <span class="text-sm">
+  (Additional): 
+  </span></div><div class='text-right'>${monthsLeft} </div>
   <div id="totalPMT">Total Payments: </div><div class='text-right'>${currency.format(totalPMT)}</div>
   <div>
   <hr />
@@ -93,10 +103,13 @@ function calculate() {
   <div>
   <hr />
   </div>
-  <div>Value: 
+  <div>Value 
+  <span class="text-sm">
+  (Additional | Original): 
+  </span>
   <hr />
   </div>
-  <div class='text-right'>${currency.format(capital)}
+  <div class='text-right'>${currency.format(capital)} | ${currency.format(capitalOriginal)}
   <hr />
   </div>
   <div id="addPMTMade">Additional Payments: </div><div class='text-right'>${currency.format(totalAdditionalPMT)}</div>
