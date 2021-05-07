@@ -73,7 +73,6 @@ function calculate() {
   let additionalPMTMade = additionalPMT * currentMonth;
 
   result.innerHTML = `Monthly Payments: ${currency.format(payment)} 
-  <br> ${additionalPMT}
   <br> Current Balance: ${currency.format(principalCurrentBalance)} 
   <br> Months Left: ${monthsLeft} 
   <br> Additional Payments Made: ${currency.format(additionalPMTMade)}
