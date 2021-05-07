@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet" />
+    <title>Mortgage Payoff Calculator</title>
+    <style>
+      * {
+        font-family: Roboto, Arial, sans-serif;
+      }
+      .inputs {
+        width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="inputs m-3">
+        <form id="mortageForm" action="#" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <h1 class="text-2xl mb-3 font-bold">Calculate Mortgage Payoff:</h1>
+          <div class="mb-3">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="principal">Loan Amount:</label>
+            <input
+              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              type="number"
+              name="principal"
+              id="principal"
+              value="150000"
+              required
+            />
+
+            <p id="principalAlert" class="text-red-500 text-xs italic m-1"></p>
+          </div>
+          <div class="mb-3">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="interest">Annual Interest:</label>
+            <input
+              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              type="number"
+              name="interest"
+              id="interest"
+              value="4.75"
+              required
+            /><p id="interestAlert" class="text-red-500 text-xs italic m-1"></p>
+          </div>
+          <div class="mb-3">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="years">Years:</label>
+            <input
+              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              type="number"
+              name="years"
+              id="years"
+              value="30"
+              required
+            /><p id="yearsAlert" class="text-red-500 text-xs italic m-1"></p>
+          </div>
+          <div class="mb-3">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="additionalPMT">Additional Payment:</label>
+            <input
+              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              type="number"
+              name="additionalPMT"
+              id="additionalPMT"
+              value=""
+              required
+            /><p id="additionalPMTAlert" class="text-red-500 text-xs italic m-1"></p>
+          </div>
+          <div class="mb-3">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="currentMonth">Current Month:</label>
+            <input
+              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              type="number"
+              name="currentMonth"
+              id="currentMonth"
+              value="30"
+              required
+            /><p id="currentMonthAlert" class="text-red-500 text-xs italic m-1"></p>
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              type="button"
+              value="Submit"
+              class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              onclick="calculate()"
+              >Submit
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold inputs ml-3" id="result"></div>
+      <script src="./assets/script.js"></script>
+    </div>
+  </body>
+</html>
