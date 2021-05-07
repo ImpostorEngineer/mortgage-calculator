@@ -23,7 +23,7 @@ function principalArr(p, pmt, N, r, additionalPMT) {
     let interestPortion = p * r;
     let princiapPortion = pmt - interestPortion;
     p = p - princiapPortion - additionalPMT;
-    if (p >= 0) {
+    if (p >= -1) {
       principalEndingValue.push(Math.round(p * 100) / 100);
     }
   }
@@ -72,9 +72,12 @@ function calculate() {
   let principalCurrentBalance = pEndingValue[currentMonth - 1];
   let additionalPMTMade = additionalPMT * currentMonth;
 
-  result.innerHTML = `Monthly Payments: ${currency.format(payment)} 
-  <br> Current Balance: ${currency.format(principalCurrentBalance)} 
-  <br> Months Left: ${monthsLeft} 
-  <br> Additional Payments Made: ${currency.format(additionalPMTMade)}
-  `;
+  result.innerHTML = `
+  <div id="pmt">Monthly Payments: </div><div class='text-right'>${currency.format(payment)}</div>
+  <div id="currentBal">Current Balance: </div><div class='text-right'>${currency.format(principalCurrentBalance)}
+  </div>
+  <div id="monthsLeft">Months Left: </div><div class='text-right'>${monthsLeft} </div>
+  <div id="addPMTMade">Additional Payments Made: </div><div class='text-right'>${currency.format(
+    additionalPMTMade
+  )}</div>`;
 }
