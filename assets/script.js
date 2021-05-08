@@ -116,8 +116,7 @@ function calculate() {
   <hr /></div>
   <div class='text-right'>${currency.format(capital)}
   <hr /></div>
-  <div id="addPMTMade">Additional Payments: </div>
-  <div></div>
+  <div id="addPMTMade" class='col-span-2'>Additional Payments: </div>
   <div class='text-right'>${currency.format(totalAdditionalPMT)}</div>
   <div id="savings">Total Savings: </div>
   <div></div>

@@ -13,9 +13,21 @@
       * {
         font-family: Roboto, Arial, sans-serif;
       }
-      .inputs {
-        max-width: 500px;
+      .container {
+        max-width: 1030px;
       }
+
+      .inputs {
+        width: 500px;
+      }
+
+      #result {
+        height: 320px;
+        min-width: 450px;
+        max-width: 500px;
+        margin-left: 0px;
+      }
+
       #result > div {
         margin-bottom: 5px;
       }
@@ -23,7 +35,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="m-3">
+      <div class="m-3 grid gap-1 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
         <div class="inputs" id="inputs">
           <form id="mortageForm" action="#" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h1 class="text-2xl mb-3 font-bold">Calculate Mortgage Payoff:</h1>
@@ -109,11 +121,8 @@
               </button>
             </div>
           </form>
-          <div
-            class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold inputs grid grid-cols-3 gap-0"
-            id="result"
-          >
-          </div>
+        </div>
+        <div class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold inputs grid grid-cols-3 gap-0" id="result">
         </div>
         <!-- <div class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold" id='pmtChart'></div> -->
       </div>
