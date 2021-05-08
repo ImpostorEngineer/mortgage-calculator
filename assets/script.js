@@ -74,7 +74,9 @@ function calculate() {
   let valueArrays = principalArr(p, payment, N, r, additionalPMT);
   let originalValueArrays = principalArr(p, payment, N, r, 0);
   let monthsLeft = valueArrays.principalEndingValue.length - currentMonth;
+  let monthsLeftOriginal = N - currentMonth;
   let totalPMT = payment * valueArrays.principalEndingValue.length;
+  let totalPMTOriginal = pmt * N;
   let totalAdditionalPMT = +additionalPMT * currentMonth;
   let savings = pmt * N - payment * valueArrays.principalEndingValue.length;
   if (currentMonth > 0) {
@@ -82,38 +84,44 @@ function calculate() {
     principalCurrentBalance = valueArrays.principalEndingValue[endingValueSelector];
     principalOriginialCurrentBalance = originalValueArrays.principalEndingValue[endingValueSelector];
   }
-  let capital = currentHomeValue - principalCurrentBalance;
-  let capitalOriginal = currentHomeValue - principalOriginialCurrentBalance;
+  let capital = 0;
+  let capitalOriginal = 0;
+  if (currentHomeValue > 0) {
+    currentHomeValue - principalCurrentBalance;
+    capitalOriginal = currentHomeValue - principalOriginialCurrentBalance;
+  }
 
   result.innerHTML = `
-  <div id="pmt">Monthly Payments <span class="text-sm">
-  (Additional | Original): 
-  </span></div><div class='text-right'>${currency.format(payment)}</div>
-  <div id="currentBal">Current Balance: </div><div class='text-right'>${currency.format(
-    principalCurrentBalance
-  )} | ${currency.format(principalOriginialCurrentBalance)}
+  <div></div>
+  <div class="text-right text-purple-700">Original</div>
+  <div class="text-right text-purple-700">Additional Payments</div>
+  <div id="pmt">Monthly Payments</div>
+  <div class='text-right'>${currency.format(pmt)}</div>
+  <div class='text-right'>${currency.format(payment)}</div>
+  <div id="currentBal">Current Balance: </div>
+  <div class='text-right'>${currency.format(principalOriginialCurrentBalance)}</div>
+  <div class='text-right'>${currency.format(principalCurrentBalance)}
   </div>
-  <div id="monthsLeft">Months Left <span class="text-sm">
-  (Additional): 
-  </span></div><div class='text-right'>${monthsLeft} </div>
-  <div id="totalPMT">Total Payments: </div><div class='text-right'>${currency.format(totalPMT)}</div>
-  <div>
-  <hr />
-  </div>
-  <div>
-  <hr />
-  </div>
-  <div>Value 
-  <span class="text-sm">
-  (Additional | Original): 
-  </span>
-  <hr />
-  </div>
-  <div class='text-right'>${currency.format(capital)} | ${currency.format(capitalOriginal)}
-  <hr />
-  </div>
-  <div id="addPMTMade">Additional Payments: </div><div class='text-right'>${currency.format(totalAdditionalPMT)}</div>
-  <div id="savings">Total Savings: </div><div class='text-right'>${currency.format(savings)}</div>
+  <div id="monthsLeft">Months Left:</div>
+  <div class='text-right'>${monthsLeftOriginal}</div>
+  <div class='text-right'>${monthsLeft}</div>
+  <div id="totalPMT">Total Payments:</div>
+  <div class='text-right'>${currency.format(totalPMTOriginal)}</div>
+  <div class='text-right'>${currency.format(totalPMT)}</div>
+  <div><hr /></div>
+  <div><hr /></div>
+  <div><hr /></div>
+  <div>Value:<hr /></div>
+  <div class='text-right'>${currency.format(capitalOriginal)}
+  <hr /></div>
+  <div class='text-right'>${currency.format(capital)}
+  <hr /></div>
+  <div id="addPMTMade">Additional Payments: </div>
+  <div></div>
+  <div class='text-right'>${currency.format(totalAdditionalPMT)}</div>
+  <div id="savings">Total Savings: </div>
+  <div></div>
+  <div class='text-right'>${currency.format(savings)}</div>
   `;
 
   //   let PMToptions = {
