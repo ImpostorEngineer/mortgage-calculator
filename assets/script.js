@@ -73,7 +73,7 @@ function calculate() {
   let currency = new Intl.NumberFormat('US', { style: 'currency', currency: 'USD' });
   let valueArrays = principalArr(p, payment, N, r, additionalPMT);
   let originalValueArrays = principalArr(p, payment, N, r, 0);
-  let monthsLeft = valueArrays.principalEndingValue.length - currentMonth;
+  let monthsLeftWithAdditionalPMT = valueArrays.principalEndingValue.length - currentMonth;
   let monthsLeftOriginal = N - currentMonth;
   let totalPMT = payment * valueArrays.principalEndingValue.length;
   let totalPMTOriginal = pmt * N;
@@ -84,10 +84,10 @@ function calculate() {
     principalCurrentBalance = valueArrays.principalEndingValue[endingValueSelector];
     principalOriginialCurrentBalance = originalValueArrays.principalEndingValue[endingValueSelector];
   }
-  let capital = 0;
+  let capitalWithAdditionalPMT = 0;
   let capitalOriginal = 0;
   if (currentHomeValue > 0) {
-    currentHomeValue - principalCurrentBalance;
+    capitalWithAdditionalPMT = currentHomeValue - principalCurrentBalance;
     capitalOriginal = currentHomeValue - principalOriginialCurrentBalance;
   }
 
@@ -104,7 +104,7 @@ function calculate() {
   </div>
   <div id="monthsLeft">Months Left:</div>
   <div class='text-right'>${monthsLeftOriginal}</div>
-  <div class='text-right'>${monthsLeft}</div>
+  <div class='text-right'>${monthsLeftWithAdditionalPMT}</div>
   <div id="totalPMT">Total Payments:</div>
   <div class='text-right'>${currency.format(totalPMTOriginal)}</div>
   <div class='text-right'>${currency.format(totalPMT)}</div>
@@ -114,7 +114,7 @@ function calculate() {
   <div>Value:<hr /></div>
   <div class='text-right'>${currency.format(capitalOriginal)}
   <hr /></div>
-  <div class='text-right'>${currency.format(capital)}
+  <div class='text-right'>${currency.format(capitalWithAdditionalPMT)}
   <hr /></div>
   <div id="addPMTMade" class='col-span-2'>Additional Payments: </div>
   <div class='text-right'>${currency.format(totalAdditionalPMT)}</div>
