@@ -28,6 +28,70 @@ function principalArr(p, pmt, N, r, additionalPMT) {
   return { principalEndingValue, principalPortionArr, interestPortionArr, paymentsArr };
 }
 
+function cost() {
+  let homeValue = mortageForm.homeValue.value;
+  let principal = mortageForm.principal.value;
+  let interest = mortageForm.interest.value;
+  let insuranceCost = mortageForm.insuranceCost.value;
+  let taxRate = mortageForm.taxRate.value;
+  let years = mortageForm.years.value;
+  let assessedValue = mortageForm.assessedValue.value;
+
+  if (!isNum(assessedValue)) {
+    assessedValue = homeValue;
+  }
+
+  if (!isNum(insuranceCost) || insuranceCost <= 0) {
+    insuranceCost = homeValue * 0.005;
+  }
+
+  let taxes = (assessedValue * taxRate) / 1200;
+  let cost = document.getElementById('cost');
+
+  if (!isNum(principal)) {
+    principalAlert.innerHTML = 'Need to enter a number.';
+    document.getElementById('principal').focus();
+    return false;
+  }
+  if (!isNum(interest)) {
+    interestAlert.innerHTML = 'Need to enter a number.';
+    document.getElementById('interest').focus();
+    return false;
+  }
+  if (!isNum(years)) {
+    yearsAlert.innerHTML = 'Need to enter a number.';
+    document.getElementById('years').focus();
+    return false;
+  }
+
+  principalAlert.innerHTML = '';
+  interestAlert.innerHTML = '';
+  yearsAlert.innerHTML = '';
+
+  let p = principal;
+  let r = interest / 1200;
+  let N = years * 12;
+  let monthlyInsuranceCost = insuranceCost / 12;
+  let pmt = (p * (r * Math.pow(1 + r, N))) / (Math.pow(1 + r, N) - 1);
+  let currency = new Intl.NumberFormat('US', { style: 'currency', currency: 'USD' });
+  let totalPMT = pmt + taxes + monthlyInsuranceCost;
+
+  cost.innerHTML = `
+  <div class="text-right text-purple-700">Monthly Cost</div>
+  <div></div>
+  <div class="text-right">Mortgage</div>
+  <div class='text-right'>${currency.format(pmt)}</div>
+  <div id="currentBal" class="text-right">Taxes: </div>
+  <div class='text-right'>${currency.format(taxes)}</div>
+  <div id="currentBal" class="text-right">Insurance: </div>
+  <div class='text-right'>${currency.format(monthlyInsuranceCost)}</div>
+  <div><hr /></div><div><hr /></div>
+  <div id="totalPMT" class='text-right text-purple-700'>Total Payments:</div>
+  <div class='text-right text-purple-700'>${currency.format(totalPMT)}</div>
+  <div></div>
+  `;
+}
+
 function calculate() {
   let principal = mortageForm.principal.value;
   let interest = mortageForm.interest.value;

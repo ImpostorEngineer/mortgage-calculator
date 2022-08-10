@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet" />
+    <title>Mortgage Cost Calculator</title>
+    <style>
+      * {
+        font-family: Roboto, Arial, sans-serif;
+      }
+      .container {
+        max-width: 900px;
+      }
+
+      .inputs {
+        width: 350px;
+      }
+
+      #cost {
+        height: 320px;
+        min-width: 250px;
+        max-width: 300px;
+        margin-left: 0px;
+      }
+
+      #cost > div {
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="m-3 grid gap-0 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+        <div class="inputs" id="inputs">
+          <form id="mortageForm" action="#" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h1 class="text-xl mb-3 font-bold">Calculate Monthly Payments:</h1>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="homeValue">Home Value:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="homeValue"
+                id="homeValue"
+                value="250000"
+                required
+              />
+
+              <p id="principalAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="principal">Loan Amount:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="principal"
+                id="principal"
+                value="200000"
+                required
+              />
+
+              <p id="principalAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="interest">Annual Interest:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="interest"
+                id="interest"
+                value="5.25"
+                required
+              /><p id="interestAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="years">Years:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="years"
+                id="years"
+                value="30"
+                required
+              /><p id="yearsAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="assessedValue">Assessed Value:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="assessedValue"
+                id="assessedValue"
+                value="200000"
+                required
+              /><p id="assessedValueAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="taxRate"
+                >Tax Rate (School + Property):</label
+              >
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="taxRate"
+                id="taxRate"
+                value="4.00"
+                required
+              /><p id="taxRateAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="insuranceCost"
+                >Insurance Cost (Annual):</label
+              >
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="insuranceCost"
+                id="insuranceCost"
+                value=""
+                required
+              /><p id="insuranceCostAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="flex items-center justify-between">
+              <button
+                type="button"
+                value="Submit"
+                class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                onclick="cost()"
+                >Submit
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold grid grid-cols-2 gap-1" id="cost"> </div>
+        <!-- <div class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold" id='pmtChart'></div> -->
+      </div>
+    </div>
+    <script src="./assets/script.js"></script>
+  </body>
+</html>
