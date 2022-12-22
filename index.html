@@ -35,47 +35,26 @@
   </head>
   <body>
     <div class="container">
-      <div class="m-3 grid gap-1 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+      <div class="m-3 grid gap-0 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
         <div class="inputs" id="inputs">
           <form id="mortageForm" action="#" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h1 class="text-xl mb-3 font-bold">Calculate Mortgage Payoff:</h1>
             <div class="mb-3">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="principal">Loan Amount:</label>
               <input
-                class="
-                  bg-gray-200
-                  appearance-none
-                  border-2 border-gray-200
-                  rounded
-                  py-2
-                  px-4
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-purple-500
-                "
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 type="number"
                 name="principal"
                 id="principal"
                 value="150000"
                 required
               />
-
               <p id="principalAlert" class="text-red-500 text-xs italic m-1"></p>
             </div>
             <div class="mb-3">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="interest">Annual Interest:</label>
               <input
-                class="
-                  bg-gray-200
-                  appearance-none
-                  border-2 border-gray-200
-                  rounded
-                  py-2
-                  px-4
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-purple-500
-                "
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 type="number"
                 name="interest"
                 id="interest"
@@ -86,17 +65,7 @@
             <div class="mb-3">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="years">Years:</label>
               <input
-                class="
-                  bg-gray-200
-                  appearance-none
-                  border-2 border-gray-200
-                  rounded
-                  py-2
-                  px-4
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-purple-500
-                "
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 type="number"
                 name="years"
                 id="years"
@@ -109,17 +78,7 @@
                 Additional Monthly Payments:</label
               >
               <input
-                class="
-                  bg-gray-200
-                  appearance-none
-                  border-2 border-gray-200
-                  rounded
-                  py-2
-                  px-4
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-purple-500
-                "
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 type="number"
                 name="additionalPMT"
                 id="additionalPMT"
@@ -130,17 +89,7 @@
             <div class="mb-3">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="currentMonth">Current Month:</label>
               <input
-                class="
-                  bg-gray-200
-                  appearance-none
-                  border-2 border-gray-200
-                  rounded
-                  py-2
-                  px-4
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-purple-500
-                "
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 type="number"
                 name="currentMonth"
                 id="currentMonth"
@@ -153,17 +102,7 @@
                 >Current Home Value:</label
               >
               <input
-                class="
-                  bg-gray-200
-                  appearance-none
-                  border-2 border-gray-200
-                  rounded
-                  py-2
-                  px-4
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-purple-500
-                "
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 type="number"
                 name="currentHomeValue"
                 id="currentHomeValue"
@@ -175,17 +114,7 @@
               <button
                 type="button"
                 value="Submit"
-                class="
-                  shadow
-                  bg-purple-500
-                  hover:bg-purple-400
-                  focus:shadow-outline focus:outline-none
-                  text-white
-                  font-bold
-                  py-2
-                  px-4
-                  rounded
-                "
+                class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 onclick="calculate()"
                 >Submit
               </button>

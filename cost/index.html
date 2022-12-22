@@ -14,20 +14,18 @@
         font-family: Roboto, Arial, sans-serif;
       }
       .container {
-        max-width: 900px;
+        max-width: 800px;
       }
 
       .inputs {
-        width: 350px;
+        width: 100%;
       }
-
       #cost {
         height: 320px;
         min-width: 250px;
         max-width: 300px;
         margin-left: 0px;
       }
-
       #cost > div {
         margin-bottom: 5px;
       }
@@ -35,7 +33,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="m-3 grid gap-0 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+      <div class="m-1 grid gap-0 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
         <div class="inputs" id="inputs">
           <form id="mortageForm" action="#" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h1 class="text-xl mb-3 font-bold">Calculate Monthly Payments:</h1>
@@ -49,7 +47,6 @@
                 value="250000"
                 required
               />
-
               <p id="principalAlert" class="text-red-500 text-xs italic m-1"></p>
             </div>
             <div class="mb-3">
@@ -62,7 +59,6 @@
                 value="200000"
                 required
               />
-
               <p id="principalAlert" class="text-red-500 text-xs italic m-1"></p>
             </div>
             <div class="mb-3">
@@ -72,7 +68,7 @@
                 type="number"
                 name="interest"
                 id="interest"
-                value="5.25"
+                value="6"
                 required
               /><p id="interestAlert" class="text-red-500 text-xs italic m-1"></p>
             </div>
@@ -94,7 +90,7 @@
                 type="number"
                 name="assessedValue"
                 id="assessedValue"
-                value="200000"
+                value="250000"
                 required
               /><p id="assessedValueAlert" class="text-red-500 text-xs italic m-1"></p>
             </div>
@@ -139,6 +135,6 @@
         <!-- <div class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold" id='pmtChart'></div> -->
       </div>
     </div>
-    <script src="./assets/script.js"></script>
+    <script src="../assets/script.js"></script>
   </body>
 </html>
