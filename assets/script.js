@@ -121,18 +121,18 @@ function cost() {
   let totalPMT = pmt + taxes + monthlyInsuranceCost;
 
   cost.innerHTML = `
-  <div class="text-right text-purple-700">Monthly Cost</div>
-  <div></div>
-  <div class="text-right">Mortgage</div>
-  <div class='text-right'>${currency.format(pmt)}</div>
-  <div id="currentBal" class="text-right">Taxes: </div>
-  <div class='text-right'>${currency.format(taxes)}</div>
-  <div id="currentBal" class="text-right">Insurance: </div>
-  <div class='text-right'>${currency.format(monthlyInsuranceCost)}</div>
-  <div><hr /></div><div><hr /></div>
-  <div id="totalPMT" class='text-right text-purple-700'>Total Payments:</div>
-  <div class='text-right text-purple-700'>${currency.format(totalPMT)}</div>
-  <div></div>
+  <div class="cost-label text-purple-700">Monthly Cost</div>
+  <div class="cost-value"></div>
+  <div class="cost-label">Mortgage</div>
+  <div class="cost-value">${currency.format(pmt)}</div>
+  <div id="currentBal" class="cost-label">Taxes:</div>
+  <div class="cost-value">${currency.format(taxes)}</div>
+  <div id="currentBal" class="cost-label">Insurance:</div>
+  <div class="cost-value">${currency.format(monthlyInsuranceCost)}</div>
+  <div class="col-span-2"><hr /></div>
+  <div id="totalPMT" class="cost-label text-purple-700">Total Payments:</div>
+  <div class="cost-value text-purple-700">${currency.format(totalPMT)}</div>
+  <div class="col-span-2"></div>
   `;
 }
 
@@ -193,35 +193,32 @@ function calculate() {
   }
 
   result.innerHTML = `
-  <div></div>
-  <div class="text-right text-purple-700">Original</div>
-  <div class="text-right text-purple-700">Additional Payments</div>
-  <div id="pmt">Monthly Payments</div>
-  <div class='text-right'>${currency.format(pmt)}</div>
-  <div class='text-right'>${currency.format(payment)}</div>
-  <div id="currentBal">Current Balance: </div>
-  <div class='text-right'>${currency.format(principalOriginialCurrentBalance)}</div>
-  <div class='text-right'>${currency.format(principalCurrentBalance)}
-  </div>
-  <div id="monthsLeft">Months Left:</div>
-  <div class='text-right'>${monthsLeftOriginal}</div>
-  <div class='text-right'>${monthsLeftWithAdditionalPMT}</div>
-  <div id="totalPMT">Total Payments:</div>
-  <div class='text-right'>${currency.format(totalPMTOriginal)}</div>
-  <div class='text-right'>${currency.format(totalPMT)}</div>
-  <div><hr /></div>
-  <div><hr /></div>
-  <div><hr /></div>
-  <div>Value:<hr /></div>
-  <div class='text-right'>${currency.format(capitalOriginal)}
-  <hr /></div>
-  <div class='text-right'>${currency.format(capitalWithAdditionalPMT)}
-  <hr /></div>
-  <div id="addPMTMade" class='col-span-2'>Additional Payments: </div>
-  <div class='text-right'>${currency.format(totalAdditionalPMT)}</div>
-  <div id="savings">Total Savings: </div>
-  <div></div>
-  <div class='text-right'>${currency.format(savings)}</div>
+  <div class="result-label"></div>
+  <div class="result-col-header text-purple-700">Original</div>
+  <div class="result-col-header text-purple-700">With Extra</div>
+  <div class="result-label">Monthly Payments</div>
+  <div class="result-value">${currency.format(pmt)}</div>
+  <div class="result-value">${currency.format(payment)}</div>
+  <div class="result-label">Current Balance:</div>
+  <div class="result-value">${currency.format(principalOriginialCurrentBalance)}</div>
+  <div class="result-value">${currency.format(principalCurrentBalance)}</div>
+  <div class="result-label">Months Left:</div>
+  <div class="result-value">${monthsLeftOriginal}</div>
+  <div class="result-value">${monthsLeftWithAdditionalPMT}</div>
+  <div class="result-label">Total Payments:</div>
+  <div class="result-value">${currency.format(totalPMTOriginal)}</div>
+  <div class="result-value">${currency.format(totalPMT)}</div>
+  <div class="col-span-3"><hr /></div>
+  <div class="result-label">Value:</div>
+  <div class="result-value">${currency.format(capitalOriginal)}</div>
+  <div class="result-value">${currency.format(capitalWithAdditionalPMT)}</div>
+  <div class="col-span-3"><hr /></div>
+  <div class="result-label">Additional Payments:</div>
+  <div class="result-value"></div>
+  <div class="result-value">${currency.format(totalAdditionalPMT)}</div>
+  <div class="result-label">Total Savings:</div>
+  <div class="result-value"></div>
+  <div class="result-value">${currency.format(savings)}</div>
   `;
 
   //   let PMToptions = {

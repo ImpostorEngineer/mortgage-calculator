@@ -25,10 +25,23 @@
         min-height: 320px;
         width: 100%;
         overflow-y: auto;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.95fr) minmax(0, 0.95fr);
+        column-gap: 0.75rem;
+        row-gap: 0.5rem;
+        align-items: center;
       }
       #result > div {
-        margin-bottom: 5px;
-        word-break: break-word;
+        word-break: normal;
+      }
+      #result .result-label {
+        text-align: left;
+        white-space: normal;
+      }
+      #result .result-col-header,
+      #result .result-value {
+        text-align: right;
+        white-space: nowrap;
+        font-size: 0.95rem;
       }
       input {
         width: 100%;
@@ -55,6 +68,14 @@
         }
         form {
           padding: 1rem 0.5rem !important;
+        }
+        #result {
+          grid-template-columns: minmax(0, 1fr) auto auto;
+          column-gap: 0.5rem;
+          font-size: 0.95rem;
+        }
+        #result .result-label {
+          white-space: normal;
         }
       }
     </style>
@@ -148,7 +169,7 @@
           </form>
         </div>
         <div
-          class="bg-white shadow-md rounded px-4 py-4 sm:px-8 sm:py-4 mb-4 font-bold grid grid-cols-2 sm:grid-cols-3 gap-0"
+          class="bg-white shadow-md rounded px-4 py-4 sm:px-8 sm:py-4 mb-4 font-bold grid"
           id="result"
         ></div>
         <!-- <div class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold" id='pmtChart'></div> -->
