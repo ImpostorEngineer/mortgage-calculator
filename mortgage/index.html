@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet" />
+    <title>Mortgage Payoff Calculator</title>
+    <style>
+      * {
+        font-family: Roboto, Arial, sans-serif;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      .inputs {
+        width: 100%;
+      }
+      #result {
+        min-height: 320px;
+        width: 100%;
+        overflow-y: auto;
+        grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 0.75rem;
+        row-gap: 0.65rem;
+        grid-auto-rows: min-content;
+        align-content: start;
+        align-items: center;
+      }
+      #result > div {
+        word-break: normal;
+      }
+      #result .result-label {
+        text-align: left;
+        white-space: normal;
+      }
+      #result .result-col-header,
+      #result .result-value {
+        text-align: right;
+        white-space: nowrap;
+        font-size: 0.95rem;
+      }
+      #result .result-title {
+        font-size: 1.4rem;
+        line-height: 1.2;
+      }
+      #result .result-divider {
+        margin: 0.35rem 0;
+      }
+      input {
+        width: 100%;
+        font-size: 16px;
+      }
+      label {
+        display: block;
+      }
+      button {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 0.75rem;
+        }
+        h1 {
+          font-size: 1.25rem;
+        }
+        label {
+          font-size: 0.875rem;
+        }
+        form {
+          padding: 1rem 0.5rem !important;
+        }
+        #result {
+          grid-template-columns: minmax(0, 1fr) auto auto;
+          column-gap: 0.5rem;
+          font-size: 0.95rem;
+        }
+        #result .result-label {
+          white-space: normal;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="my-3">
+        <a
+          href="../index.html"
+          class="inline-block text-sm font-bold text-purple-600 hover:text-purple-500 focus:outline-none focus:underline"
+          >← Back Home</a
+        >
+      </div>
+      <div class="my-3 grid gap-3 grid-cols-1 lg:grid-cols-2">
+        <div class="inputs" id="inputs">
+          <form id="mortgageForm" action="#" class="bg-white shadow-md rounded px-4 py-6 sm:px-8 sm:py-6 mb-4">
+            <h1 class="text-xl mb-3 font-bold">Calculate Mortgage Payoff:</h1>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="principal">Loan Amount:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="text"
+                name="principal"
+                id="principal"
+                value="150,000"
+                required
+              />
+              <p id="principalAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="interest">Annual Interest:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="interest"
+                id="interest"
+                value="4.75"
+                required
+              /><p id="interestAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="years">Years:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="years"
+                id="years"
+                value="30"
+                required
+              /><p id="yearsAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="additionalPMT">
+                Additional Monthly Payments:</label
+              >
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="text"
+                name="additionalPMT"
+                id="additionalPMT"
+                value=""
+                required
+              /><p id="additionalPMTAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="interest">Savings Rate:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="savingsRate"
+                id="savingsRate"
+                value="6.00"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="currentMonth">Current Month:</label>
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="number"
+                name="currentMonth"
+                id="currentMonth"
+                value="0"
+                required
+              /><p id="currentMonthAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="currentHomeValue"
+                >Current Home Value:</label
+              >
+              <input
+                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                type="text"
+                name="currentHomeValue"
+                id="currentHomeValue"
+                value="0"
+                required
+              /><p id="currentHomeValueAlert" class="text-red-500 text-xs italic m-1"></p>
+            </div>
+            <div class="flex items-center justify-between">
+              <button
+                type="button"
+                value="Submit"
+                class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                onclick="calculate()"
+                >Submit
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="bg-white shadow-md rounded px-4 py-4 sm:px-8 sm:py-4 mb-4 font-bold grid" id="result"></div>
+        <!-- <div class="bg-white shadow-md rounded px-8 pt-4 pb-4 mb-4 font-bold" id='pmtChart'></div> -->
+      </div>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>

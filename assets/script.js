@@ -121,18 +121,16 @@ function cost() {
   let totalPMT = pmt + taxes + monthlyInsuranceCost;
 
   cost.innerHTML = `
-  <div class="cost-label text-purple-700">Monthly Cost</div>
-  <div class="cost-value"></div>
+  <div class="cost-label cost-title text-purple-700 col-span-2 mb-2">Monthly Cost</div>
   <div class="cost-label">Mortgage</div>
   <div class="cost-value">${currency.format(pmt)}</div>
-  <div id="currentBal" class="cost-label">Taxes:</div>
+  <div class="cost-label">Taxes</div>
   <div class="cost-value">${currency.format(taxes)}</div>
-  <div id="currentBal" class="cost-label">Insurance:</div>
+  <div class="cost-label">Insurance</div>
   <div class="cost-value">${currency.format(monthlyInsuranceCost)}</div>
-  <div class="col-span-2"><hr /></div>
-  <div id="totalPMT" class="cost-label text-purple-700">Total Payments:</div>
+  <div class="col-span-2 cost-divider"><hr /></div>
+  <div class="cost-label text-purple-700">Total Payments</div>
   <div class="cost-value text-purple-700">${currency.format(totalPMT)}</div>
-  <div class="col-span-2"></div>
   `;
 }
 
@@ -144,8 +142,9 @@ function calculate() {
 
   let principal = getCleanValue(form.principal.value);
   let interest = form.interest.value;
+  let savingsRate = form.savingsRate.value / 100;
   let years = form.years.value;
-  let additionalPMT = form.additionalPMT.value;
+  let additionalPMT = getCleanValue(form.additionalPMT.value);
   let currentMonth = form.currentMonth.value;
   let currentHomeValue = getCleanValue(form.currentHomeValue.value);
   let result = document.getElementById('result');
@@ -191,34 +190,39 @@ function calculate() {
     capitalWithAdditionalPMT = currentHomeValue - principalCurrentBalance;
     capitalOriginal = currentHomeValue - principalOriginialCurrentBalance;
   }
+  let earnings =
+    (additionalPMT * (Math.pow(1 + savingsRate / 12, currentMonth > 0 ? currentMonth : N) - 1)) / (savingsRate / 12);
 
   result.innerHTML = `
-  <div class="result-label"></div>
+  <div class="result-label result-title text-purple-700">Payoff Summary</div>
   <div class="result-col-header text-purple-700">Original</div>
   <div class="result-col-header text-purple-700">With Extra</div>
   <div class="result-label">Monthly Payments</div>
   <div class="result-value">${currency.format(pmt)}</div>
   <div class="result-value">${currency.format(payment)}</div>
-  <div class="result-label">Current Balance:</div>
+  <div class="result-label">Current Balance</div>
   <div class="result-value">${currency.format(principalOriginialCurrentBalance)}</div>
   <div class="result-value">${currency.format(principalCurrentBalance)}</div>
-  <div class="result-label">Months Left:</div>
+  <div class="result-label">Months Left</div>
   <div class="result-value">${monthsLeftOriginal}</div>
   <div class="result-value">${monthsLeftWithAdditionalPMT}</div>
-  <div class="result-label">Total Payments:</div>
+  <div class="result-label">Total Payments</div>
   <div class="result-value">${currency.format(totalPMTOriginal)}</div>
   <div class="result-value">${currency.format(totalPMT)}</div>
-  <div class="col-span-3"><hr /></div>
-  <div class="result-label">Value:</div>
+  <div class="col-span-3 result-divider"><hr /></div>
+  <div class="result-label">Home Value Equity</div>
   <div class="result-value">${currency.format(capitalOriginal)}</div>
   <div class="result-value">${currency.format(capitalWithAdditionalPMT)}</div>
-  <div class="col-span-3"><hr /></div>
-  <div class="result-label">Additional Payments:</div>
-  <div class="result-value"></div>
+  <div class="col-span-3 result-divider"><hr /></div>
+  <div class="result-label">Additional Payments</div>
+  <div class="result-value">-</div>
   <div class="result-value">${currency.format(totalAdditionalPMT)}</div>
-  <div class="result-label">Total Savings:</div>
-  <div class="result-value"></div>
-  <div class="result-value">${currency.format(savings)}</div>
+  <div class="result-label">Invested (${Math.round(savingsRate * 10000) / 100}%)</div>
+  <div class="result-value">-</div>
+  <div class="result-value">${currency.format(earnings)}</div>
+  <div class="result-label text-purple-700">Total Savings</div>
+  <div class="result-value">-</div>
+  <div class="result-value text-purple-700">${currency.format(savings)}</div>
   `;
 
   //   let PMToptions = {
@@ -316,6 +320,7 @@ window.addEventListener('DOMContentLoaded', function () {
   if (isMortgagePage) {
     formatNumberInput(document.getElementById('principal'));
     formatNumberInput(document.getElementById('currentHomeValue'));
+    formatNumberInput(document.getElementById('additionalPMT'));
   }
 
   if (isCostPage) {
