@@ -1,5 +1,24 @@
+function formatNumberInput(inputElement) {
+  if (!inputElement) {
+    return;
+  }
+
+  inputElement.addEventListener('input', function () {
+    const value = this.value.replace(/,/g, '');
+    if (!isNaN(value) && value !== '') {
+      this.value = Number(value).toLocaleString('en-US');
+    }
+  });
+}
+
+// When you need to use the principal value in calculations, strip the commas:
+function getCleanValue(value) {
+  return +value.toString().replace(/,/g, '');
+}
+
 function isNum(x) {
-  filter = /(^\d+\.?$)|(^\d*\.\d+$)/;
+  x = getCleanValue(x);
+  const filter = /(^\d+\.?$)|(^\d*\.\d+$)/;
   if (filter.test(x)) {
     return true;
   }
@@ -28,14 +47,47 @@ function principalArr(p, pmt, N, r, additionalPMT) {
   return { principalEndingValue, principalPortionArr, interestPortionArr, paymentsArr };
 }
 
+function getAlertElement(fieldId) {
+  return document.getElementById(`${fieldId}Alert`);
+}
+
+function setAlert(fieldId, message) {
+  const alertElement = getAlertElement(fieldId);
+  if (alertElement) {
+    alertElement.innerHTML = message;
+  }
+}
+
+function clearAlerts(fieldIds) {
+  fieldIds.forEach((fieldId) => setAlert(fieldId, ''));
+}
+
+function validateNumberField(fieldId, value) {
+  if (!isNum(value)) {
+    setAlert(fieldId, 'Need to enter a number.');
+    const input = document.getElementById(fieldId);
+    if (input) {
+      input.focus();
+    }
+    return false;
+  }
+  setAlert(fieldId, '');
+  return true;
+}
+
 function cost() {
-  let homeValue = mortageForm.homeValue.value;
-  let principal = mortageForm.principal.value;
-  let interest = mortageForm.interest.value;
-  let insuranceCost = mortageForm.insuranceCost.value;
-  let taxRate = mortageForm.taxRate.value;
-  let years = mortageForm.years.value;
-  let assessedValue = mortageForm.assessedValue.value;
+  const form = document.getElementById('mortgageForm');
+  if (!form) {
+    return;
+  }
+
+  let homeValue = getCleanValue(form.homeValue.value);
+  let principal = getCleanValue(form.principal.value);
+  let interest = form.interest.value;
+  let insuranceCost = getCleanValue(form.insuranceCost.value);
+  let taxRate = form.taxRate.value;
+  let years = form.years.value;
+  let assessedValue = getCleanValue(form.assessedValue.value);
 
   if (!isNum(assessedValue)) {
     assessedValue = homeValue;
@@ -48,25 +100,17 @@ function cost() {
   let taxes = (assessedValue * taxRate) / 1200;
   let cost = document.getElementById('cost');
 
-  if (!isNum(principal)) {
-    principalAlert.innerHTML = 'Need to enter a number.';
-    document.getElementById('principal').focus();
+  if (!validateNumberField('principal', principal)) {
     return false;
   }
-  if (!isNum(interest)) {
-    interestAlert.innerHTML = 'Need to enter a number.';
-    document.getElementById('interest').focus();
+  if (!validateNumberField('interest', interest)) {
     return false;
   }
-  if (!isNum(years)) {
-    yearsAlert.innerHTML = 'Need to enter a number.';
-    document.getElementById('years').focus();
+  if (!validateNumberField('years', years)) {
     return false;
   }
 
-  principalAlert.innerHTML = '';
-  interestAlert.innerHTML = '';
-  yearsAlert.innerHTML = '';
+  clearAlerts(['principal', 'interest', 'years']);
 
   let p = principal;
   let r = interest / 1200;
@@ -93,31 +137,26 @@ function cost() {
 }
 
 function calculate() {
-  let principal = mortageForm.principal.value;
-  let interest = mortageForm.interest.value;
-  let years = mortageForm.years.value;
-  let additionalPMT = mortageForm.additionalPMT.value;
-  let currentMonth = mortageForm.currentMonth.value;
-  let currentHomeValue = mortageForm.currentHomeValue.value;
-  let result = document.getElementById('result');
-  let principalAlert = document.getElementById('principalAlert');
-  let interestAlert = document.getElementById('interestAlert');
-  let yearsAlert = document.getElementById('yearsAlert');
-  let additionalPMTAlert = document.getElementById('additionalPMTAlert');
+  const form = document.getElementById('mortgageForm');
+  if (!form) {
+    return;
+  }
 
-  if (!isNum(principal)) {
-    principalAlert.innerHTML = 'Need to enter a number.';
-    document.getElementById('principal').focus();
+  let principal = getCleanValue(form.principal.value);
+  let interest = form.interest.value;
+  let years = form.years.value;
+  let additionalPMT = form.additionalPMT.value;
+  let currentMonth = form.currentMonth.value;
+  let currentHomeValue = getCleanValue(form.currentHomeValue.value);
+  let result = document.getElementById('result');
+
+  if (!validateNumberField('principal', principal)) {
     return false;
   }
-  if (!isNum(interest)) {
-    interestAlert.innerHTML = 'Need to enter a number.';
-    document.getElementById('interest').focus();
+  if (!validateNumberField('interest', interest)) {
     return false;
   }
-  if (!isNum(years)) {
-    yearsAlert.innerHTML = 'Need to enter a number.';
-    document.getElementById('years').focus();
+  if (!validateNumberField('years', years)) {
     return false;
   }
 
@@ -125,9 +164,7 @@ function calculate() {
   let principalCurrentBalance = principal;
   let principalOriginialCurrentBalance = principal;
 
-  principalAlert.innerHTML = '';
-  interestAlert.innerHTML = '';
-  yearsAlert.innerHTML = '';
+  clearAlerts(['principal', 'interest', 'years']);
 
   let p = principal;
   let r = interest / 1200;
@@ -136,7 +173,7 @@ function calculate() {
   let payment = pmt + +additionalPMT;
   let currency = new Intl.NumberFormat('US', { style: 'currency', currency: 'USD' });
   let valueArrays = principalArr(p, payment, N, r, additionalPMT);
-  let originalValueArrays = principalArr(p, payment, N, r, 0);
+  let originalValueArrays = principalArr(p, pmt, N, r, 0);
   let monthsLeftWithAdditionalPMT = valueArrays.principalEndingValue.length - currentMonth;
   let monthsLeftOriginal = N - currentMonth;
   let totalPMT = payment * valueArrays.principalEndingValue.length;
@@ -274,3 +311,20 @@ function calculate() {
   //   let PMTChart = new ApexCharts(document.querySelector('#pmtChart'), PMToptions);
   //   PMTChart.render();
 }
+
+window.addEventListener('DOMContentLoaded', function () {
+  const isMortgagePage = Boolean(document.getElementById('additionalPMT'));
+  const isCostPage = Boolean(document.getElementById('homeValue'));
+
+  if (isMortgagePage) {
+    formatNumberInput(document.getElementById('principal'));
+    formatNumberInput(document.getElementById('currentHomeValue'));
+  }
+
+  if (isCostPage) {
+    formatNumberInput(document.getElementById('homeValue'));
+    formatNumberInput(document.getElementById('principal'));
+    formatNumberInput(document.getElementById('assessedValue'));
+    formatNumberInput(document.getElementById('insuranceCost'));
+  }
+});
